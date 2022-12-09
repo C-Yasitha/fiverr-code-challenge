@@ -76,9 +76,9 @@ const start = async () => {
     try {
         mongoose.set('strictQuery', false);
         await mongoose.connect(
-            process.env.DB_PATH
+            process.env.DB_PATH || "mongodb+srv://root:root@reactformcluster.eywmupo.mongodb.net/?retryWrites=true&w=majority"
         );
-        app.listen(process.env.SERVER_PORT, () => console.log("Server started on port "+process.env.SERVER_PORT));
+        app.listen(process.env.SERVER_PORT || 8080, () => console.log("Server started on port "+process.env.SERVER_PORT || 8080));
     } catch (error) {
         console.error(error);
         process.exit(1);

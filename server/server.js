@@ -1,6 +1,7 @@
 require('dotenv').config(); 
 
 const express = require("express");
+var cors = require('cors')
 const mongoose = require("mongoose");
 
 const { Employee, Sector } = require("./models");
@@ -8,6 +9,8 @@ const { Employee, Sector } = require("./models");
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
 
 // just server checking
 app.get("/", async (req, res) => {
@@ -47,10 +50,17 @@ app.post("/employees", async (req, res) => {
     return res.status(201).json(insertedEmp);
 });
 
+// create sector
+app.post("/sectors", async (req, res) => {
+    const newSector = new Sector({ ...req.body });
+    const insertedSec = await newSector.save();
+    return res.status(201).json(insertedSec);
+});
+
 //update emp by id
 app.put("/employees/:id", async (req, res) => {
     const { id } = req.params;
-    await Employee.updateOne({ id }, req.body);
+    await Employee.updateOne({ '_id' : id }, req.body);
     const updatedEmp = await Employee.findById(id);
     return res.status(200).json(updatedEmp);
 });

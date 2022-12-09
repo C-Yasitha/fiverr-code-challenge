@@ -4,12 +4,14 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AppLayout from "./components/appLayout";
 import Create from "./components/create";
+import Update from "./components/update";
 
 function App() {
   return (
     <AppLayout>
         <Routes>
           <Route path="/" element={<Create />} />
+          <Route path="/update" element={<Update />} />
         </Routes>
     </AppLayout>
   );
